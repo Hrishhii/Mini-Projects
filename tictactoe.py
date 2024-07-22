@@ -37,21 +37,17 @@ def modify_game(num, turn):
         gameboard[2][2] = turn
 
 def x_o():
-    user = input("Choose X or O: ").strip()
-    if user == 'X' or user == 'O':
-        pass
-    else:
-        while user != 'X' or user != 'O':
-            print("Incorrect choice.")
-            user = input("Choose X or O: ").strip()
-            if user == 'X' or user == 'O':
-                break
-    if user == 'X':
-        comp = 'O'
-    else:
-        comp = 'X'
-    print(f"user: {user} comp: {comp}")
-    return user, comp
+    while True:
+        user = input("Choose X or O: ").strip().upper()
+        if user in ['X', 'O']:
+            if user == 'X':
+                comp = 'O'
+            else:
+                comp = 'X'
+            print(f"user: {user} comp: {comp}")
+            return user, comp
+        else:
+            print("Incorrect choice. Please choose X or O.")
 
 def winner(user, comp, gameboard):
     if gameboard[0][0] == gameboard[0][1] == gameboard[0][2] == user:
