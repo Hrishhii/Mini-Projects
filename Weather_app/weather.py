@@ -92,6 +92,5 @@ temp_res.pack()
 
 weather_res = tk.Label(root, text="", font=("Helvetica", 15))
 weather_res.pack()
-
 # Start the main event loop
 root.mainloop()
