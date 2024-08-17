@@ -56,14 +56,14 @@ def search():
 
     location_lable.configure(text=f"{city}, {country}")  # Update location label
 
+    temp_res.configure(text=f"{temp}°C")  # Update temperature label
+
     image = Image.open(requests.get(icon_url, stream=True).raw)  # Download and open weather icon
     icon = ImageTk.PhotoImage(image)  # Convert image to format usable by Tkinter
-
     weather_image.configure(image=icon)  # Update weather image label
     weather_image.image = icon
 
-    temp_res.configure(text=f"Temperature: {temp}°C")  # Update temperature label
-    weather_res.configure(text=f"Description: {weather}")  # Update weather description label
+    weather_res.configure(text=f"{weather}")  # Update weather description label
 
 
 # Create the main application window
@@ -72,25 +72,22 @@ root.title("Weather Application")
 root.minsize(900, 700)  # Set minimum window size
 
 # Create GUI elements
-label = tk.Label(root, text="Enter a city name", font=("Helvetica", 20))
-label.pack()
-
 city_entry = tk.Entry(root, width=30, font=("Helvetica", 18))
 city_entry.pack(pady=10)
 
 check_button = tk.Button(root, text="Check Weather", command=search)
-check_button.pack(pady=10)
+check_button.pack(pady=5)
 
 location_lable = tk.Label(root, font="Helvetica, 25")
 location_lable.pack(pady=20)
 
+temp_res = tk.Label(root, text="", font=("Helvetica", 40))
+temp_res.pack()
+
 weather_image = tk.Label(root)
 weather_image.pack()
 
-temp_res = tk.Label(root, text="", font=("Helvetica", 20))
-temp_res.pack()
-
-weather_res = tk.Label(root, text="", font=("Helvetica", 15))
+weather_res = tk.Label(root, text="", font=("Helvetica", 25))
 weather_res.pack()
 # Start the main event loop
 root.mainloop()
