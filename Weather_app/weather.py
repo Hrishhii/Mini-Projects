@@ -1,5 +1,6 @@
 import tkinter as tk
 import requests
+import time
 from PIL import Image, ImageTk
 from tkinter import messagebox
 import ttkbootstrap  # Import ttkbootstrap for theming (optional)
@@ -13,11 +14,6 @@ def weather_calc(place):
     """
     This function fetches weather data from the OpenWeatherMap API for a given city.
 
-    Args:
-        place (str): The city name to fetch weather data for.
-
-    Returns:
-        tuple: A tuple containing (icon_url, temp, weather, city, country) if successful, otherwise None.
     """
 
     request_url = f"{BASE_URL}?appid={API_KEY}&q={place}"
@@ -33,9 +29,19 @@ def weather_calc(place):
     icon_code = data['weather'][0]['icon']
     city = data['name']
     country = data['sys']['country']
+    min_temp = round(data["main"]["temp_min"] - 273.15, 1)
+    max_temp = round(data["main"]["temp_max"] - 273.15, 1)
+    press = data["main"]["pressure"]
+    humid = data["main"]["humidity"]
+
+    sunrise_tp = data["sys"]["sunrise"]
+    sunset_tp = data["sys"]["sunset"]
+    # Convert timestamps to human-readable format
+    sunrise_time = time.strftime('%H:%M:%S %p', time.localtime(sunrise_tp))
+    sunset_time = time.strftime('%H:%M:%S %p', time.localtime(sunset_tp))
 
     icon_url = f"https://openweathermap.org/img/wn/{icon_code}@2x.png"
-    return icon_url, temp, weather, city, country
+    return icon_url, temp, weather, city, country, data, min_temp, max_temp, press, humid, sunrise_time, sunset_time
 
 
 # Function to search weather for a city entered by the user
@@ -52,7 +58,7 @@ def search():
         return  # Exit the function if city not found
 
     # Unpack the returned values from weather_calc
-    icon_url, temp, weather, city, country = result
+    icon_url, temp, weather, city, country, data, min_temp, max_temp, press, humid, sunrise_time, sunset_time = result
 
     location_lable.configure(text=f"{city}, {country}")  # Update location label
 
@@ -64,6 +70,12 @@ def search():
     weather_image.image = icon
 
     weather_res.configure(text=f"{weather}")  # Update weather description label
+
+    min_max.configure(text=f"Min Temp: {min_temp}°C  Max Temp: {max_temp}°C")
+
+    press_humid.configure(text=f"Pressure: {press}  Humidity: {humid}")
+
+    suntime.configure(text=f"Sunrise: {sunrise_time}  Sunset: {sunset_time}")
 
 
 # Create the main application window
@@ -88,6 +100,15 @@ weather_image = tk.Label(root)
 weather_image.pack()
 
 weather_res = tk.Label(root, text="", font=("Helvetica", 25))
-weather_res.pack()
+weather_res.pack(pady=20)
+
+min_max = tk.Label(root, text="", font=("Helvetica", 13))
+min_max.pack(pady=5)
+
+press_humid = tk.Label(root, text="", font=("Helvetica", 13))
+press_humid.pack()
+
+suntime = tk.Label(root, text="", font=("Helvetica", 13))
+suntime.pack()
 # Start the main event loop
 root.mainloop()
