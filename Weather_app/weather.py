@@ -1,14 +1,14 @@
 import tkinter as tk
 import requests
 import time
-from dotenv import load_dotenv
+from dotenv import load_dotenv  # used to import API_KEY from .env
 import os
 from PIL import Image, ImageTk
 from tkinter import messagebox
 import ttkbootstrap  # Import ttkbootstrap for theming (optional)
 
 # Define API key and base URL for OpenWeatherMap API
-load_dotenv()
+load_dotenv()  # loads the value from .env
 BASE_URL = "http://api.openweathermap.org/data/2.5/weather"
 
 
