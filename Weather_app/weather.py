@@ -1,12 +1,14 @@
 import tkinter as tk
 import requests
 import time
+from dotenv import load_dotenv
+import os
 from PIL import Image, ImageTk
 from tkinter import messagebox
 import ttkbootstrap  # Import ttkbootstrap for theming (optional)
 
 # Define API key and base URL for OpenWeatherMap API
-API_KEY = "2457943f2465703ab99e096319928ff7"
+load_dotenv()
 BASE_URL = "http://api.openweathermap.org/data/2.5/weather"
 
 
@@ -16,7 +18,7 @@ def weather_calc(place):
 
     """
 
-    request_url = f"{BASE_URL}?appid={API_KEY}&q={place}"
+    request_url = f"{BASE_URL}?appid={os.getenv('API_KEY')}&q={place}"
     response = requests.get(request_url)
 
     if response.status_code == 404:  # Check for "City not found" error (status code 404)
