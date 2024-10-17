@@ -1,14 +1,14 @@
 import tkinter as tk
 import requests
 import time
-from dotenv import load_dotenv  # used to import API_KEY from .env
-import os
+from dotenv import load_dotenv  # used to import API_KEY from .env (Not neccessary when you clone the repository)
+import os #Not neccessary when you clone the repository
 from PIL import Image, ImageTk
 from tkinter import messagebox
 import ttkbootstrap  # Import ttkbootstrap for theming (optional)
 
 # Define API key and base URL for OpenWeatherMap API
-load_dotenv()  # loads the value from .env
+load_dotenv()  # loads the value from .env (Instead of .env you could directly add the API key)
 BASE_URL = "http://api.openweathermap.org/data/2.5/weather"
 
 
@@ -18,7 +18,7 @@ def weather_calc(place):
 
     """
 
-    request_url = f"{BASE_URL}?appid={os.getenv('API_KEY')}&q={place}"
+    request_url = f"{BASE_URL}?appid={os.getenv('API_KEY')}&q={place}"     # replace "os.getenv('API_KEY')" with your API key
     response = requests.get(request_url)
 
     if response.status_code == 404:  # Check for "City not found" error (status code 404)
