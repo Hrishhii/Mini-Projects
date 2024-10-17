@@ -26,7 +26,7 @@ def weather_calc(place):
         return None
 
     data = response.json()
-    weather = data['weather'][0]["description"]
+    weather = data["weather"][0]["description"]
     temp = round(data["main"]["temp"] - 273.15, 1)  # Convert Kelvin to Celsius
     icon_code = data['weather'][0]['icon']
     city = data['name']
@@ -81,36 +81,40 @@ def search():
 
 
 # Create the main application window
-root = ttkbootstrap.Window(themename="morph")  # Optional theming using ttkbootstrap
-root.title("Weather Application")
-root.minsize(900, 700)  # Set minimum window size
+def main():
+    root = ttkbootstrap.Window(themename="morph")  # Optional theming using ttkbootstrap
+    root.title("Weather Application")
+    root.minsize(900, 700)  # Set minimum window size
 
-# Create GUI elements
-city_entry = tk.Entry(root, width=30, font=("Helvetica", 18))
-city_entry.pack(pady=10)
+    # Create GUI elements
+    city_entry = tk.Entry(root, width=30, font=("Helvetica", 18))
+    city_entry.pack(pady=10)
 
-check_button = tk.Button(root, text="Check Weather", command=search)
-check_button.pack(pady=5)
+    check_button = tk.Button(root, text="Check Weather", command=search)
+    check_button.pack(pady=5)
 
-location_lable = tk.Label(root, font="Helvetica, 25")
-location_lable.pack(pady=20)
+    location_lable = tk.Label(root, font="Helvetica, 25")
+    location_lable.pack(pady=20)
 
-temp_res = tk.Label(root, text="", font=("Helvetica", 40))
-temp_res.pack()
+    temp_res = tk.Label(root, text="", font=("Helvetica", 40))
+    temp_res.pack()
 
-weather_image = tk.Label(root)
-weather_image.pack()
+    weather_image = tk.Label(root)
+    weather_image.pack()
 
-weather_res = tk.Label(root, text="", font=("Helvetica", 25))
-weather_res.pack(pady=20)
+    weather_res = tk.Label(root, text="", font=("Helvetica", 25))
+    weather_res.pack(pady=20)
 
-min_max = tk.Label(root, text="", font=("Helvetica", 13))
-min_max.pack(pady=5)
+    min_max = tk.Label(root, text="", font=("Helvetica", 13))
+    min_max.pack(pady=5)
 
-press_humid = tk.Label(root, text="", font=("Helvetica", 13))
-press_humid.pack()
+    press_humid = tk.Label(root, text="", font=("Helvetica", 13))
+    press_humid.pack()
 
-suntime = tk.Label(root, text="", font=("Helvetica", 13))
-suntime.pack()
-# Start the main event loop
-root.mainloop()
+    suntime = tk.Label(root, text="", font=("Helvetica", 13))
+    suntime.pack()
+    # Start the main event loop
+    root.mainloop()
+
+if __name__ == "__main__": #updated for more efficiency
+    return main()
